@@ -1,0 +1,16 @@
+# List of sql queries to create the salon database
+
+## Log into PostgreSQL database from bash terminal with:
+psql --username=freecodecamp --dbname=postgres 
+
+
+CREATE DATABASE salon;
+
+\c salon
+
+CREATE TABLE customers(customer_id SERIAL PRIMARY KEY, name VARCHAR(50) NOT NULL, phone VARCHAR(14) UNIQUE);
+
+CREATE TABLE appointments(appointment_id SERIAL PRIMARY KEY, customer_id INT NOT NULL, service_id INT NOT NULL, time VARCHAR(7));
+
+CREATE TABLE services(service_id SERIAL PRIMARY KEY, name VARCHAR(30) NOT NULL);
+
