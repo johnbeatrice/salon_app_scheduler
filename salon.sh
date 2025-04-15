@@ -9,6 +9,7 @@ valid_phone_num='[0-9]{3}-[0-9]{3}-[0-9]{4}'
 int_in_str='.*[0-9].*'
 valid_time1='^(1[0-2]|[1-9]):[0-5][0-9]$'
 valid_time2='^(1[0-2]|[1-9])(am|pm|AM|PM)$'
+do_not_show_new_customer_insert_statement=''
 
 # function that displays main menu
 main_menu () {
@@ -54,6 +55,7 @@ do
 read CUSTOMER_PHONE
   if [[ $CUSTOMER_PHONE =~ $valid_phone_num ]];
     then
+    echo $CUSTOMER_PHONE
       break
   else 
     echo "Please enter a valid phone number:"
@@ -93,11 +95,33 @@ done
 
 echo -e "loop4 is done\n"
 
+# check if customer is already in salon database, if not, add them
+cust_exists="$($PSQL "SELECT * FROM customers WHERE phone = '$CUSTOMER_PHONE';")"
+
+if [[ -z $cust_exists ]];
+then
+  # add new customer to salon database
+ echo "$($PSQL "INSERT INTO customers (name, phone) VALUES ('$CUSTOMER_NAME', '$CUSTOMER_PHONE');")" | $do_not_show_new_customer_insert_statement
+ echo -e "Welcome new customer!\n"
+fi
+
+}
+
+create_appointment () {
+  # to add row to appointments column,
+  # query db to get customer_id associated with $CUSTOMER_PHONE,
+  customer_id="$($PSQL "SELECT customer_id FROM customers WHERE phone = '$CUSTOMER_PHONE';")"
+  service_name="$($PSQL "SELECT name FROM services WHERE service_id = '$SERVICE_ID_SELECTED';")"
+  echo "$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ('$customer_id', '$SERVICE_ID_SELECTED', '$SERVICE_TIME');")" | $do_not_show_new_customer_insert_statement
+
+  # appointment confirmation
+  echo -e "I have put you down for a $service_name at $SERVICE_TIME, $CUSTOMER_NAME."
 }
 
 echo -e "\n~~ Salon Appointment Scheduler ~~\n"
 main_menu
 get_user_input
+create_appointment
 
 # main_menu function will display welcome message and appointment options
 
