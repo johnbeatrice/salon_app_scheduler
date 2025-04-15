@@ -2,6 +2,8 @@
 
 freecodecamp relational database project - https://www.freecodecamp.org/learn/relational-database/build-a-salon-appointment-scheduler-project/build-a-salon-appointment-scheduler
 
+*Users should run build_db.sh, and then run salon.sh
+
 Requirements:
 
 You should create a database named salon
