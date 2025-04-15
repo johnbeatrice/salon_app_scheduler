@@ -14,3 +14,12 @@ CREATE TABLE appointments(appointment_id SERIAL PRIMARY KEY, customer_id INT NOT
 
 CREATE TABLE services(service_id SERIAL PRIMARY KEY, name VARCHAR(30) NOT NULL);
 
+INSERT INTO customers (name, phone) VALUES
+('John Smith', '555-123-4567'),
+('Jane Doe', '555-987-6543'),
+('Robert Jones', '555-246-8012');
+
+INSERT INTO services (name) VALUES
+('Haircut'),
+('Manicure'),
+('Pedicure');
