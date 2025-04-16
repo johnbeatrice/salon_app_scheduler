@@ -47,7 +47,7 @@ read SERVICE_ID_SELECTED
   fi
 done
 
-echo -e "loop1 is done\n"
+# echo -e "loop1 is done\n"
 
 echo "Please enter your phone number in the format of 555-555-5555"
 while [ cont_loop=true ];
@@ -63,9 +63,16 @@ read CUSTOMER_PHONE
   fi
 done
 
-echo -e "loop2 is done\n"
+# echo -e "loop2 is done\n"
+
+# check if customer is already in salon database, if not, add them
+cust_exists="$($PSQL "SELECT * FROM customers WHERE phone = '$CUSTOMER_PHONE';")"
+
+if [[ -z $cust_exists ]];
+then
 
 echo "Please enter your name:"
+
 while [ cont_loop=true ];
 do
 read CUSTOMER_NAME
@@ -77,8 +84,10 @@ read CUSTOMER_NAME
     continue
   fi
 done
-
-echo -e "loop3 is done\n"
+  # add new customer to salon database
+ echo "$($PSQL "INSERT INTO customers (name, phone) VALUES ('$CUSTOMER_NAME', '$CUSTOMER_PHONE');")" | $do_not_show_new_customer_insert_statement
+ echo -e "Welcome new customer!\n"
+fi
 
 echo "Please enter the preferred time for your appointment:"
 while [ cont_loop=true ];
@@ -93,7 +102,7 @@ read SERVICE_TIME
   fi
 done
 
-echo -e "loop4 is done\n"
+# echo -e "loop4 is done\n"
 
 # check if customer is already in salon database, if not, add them
 cust_exists="$($PSQL "SELECT * FROM customers WHERE phone = '$CUSTOMER_PHONE';")"
