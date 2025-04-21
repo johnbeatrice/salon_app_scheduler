@@ -146,11 +146,11 @@ create_appointment () {
   # to add row to appointments column,
   # query db to get customer_id associated with $CUSTOMER_PHONE,
   customer_id="$($PSQL "SELECT customer_id FROM customers WHERE phone = '$CUSTOMER_PHONE';")"
-  service_name="$($PSQL "SELECT name FROM services WHERE service_id = '$SERVICE_ID_SELECTED';")"
+  # service_name="$($PSQL "SELECT name FROM services WHERE service_id = '$SERVICE_ID_SELECTED';")"
   echo "$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ('$customer_id', '$SERVICE_ID_SELECTED', '$SERVICE_TIME');")" | $do_not_show_new_customer_insert_statement
 
   # appointment confirmation
-  echo -e "\nI have put you down for a $service_name at $SERVICE_TIME, $cust_name."
+  echo -e "\nI have put you down for a $cust_selection at $SERVICE_TIME, $cust_name."
 }
 
 echo -e "\n~~~~ MY SALON ~~~~\n"
