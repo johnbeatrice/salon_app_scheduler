@@ -106,7 +106,7 @@ else
   # echo ${cust_info[@]}
 fi
 
-echo -e "\nWhat time would you like your cut, ${cust_info[1]}?"
+echo -e "\nWhat time would you like your cut, $cust_name?"
 while [ cont_loop=true ];
 do
 read SERVICE_TIME
