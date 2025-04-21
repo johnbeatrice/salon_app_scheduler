@@ -91,9 +91,14 @@ done
   # add new customer to salon database
  echo "$($PSQL "INSERT INTO customers (name, phone) VALUES ('$CUSTOMER_NAME', '$CUSTOMER_PHONE');")" | $do_not_show_new_customer_insert_statement
 #  echo -e "Welcome new customer!\n"
+else
+  declare -a cust_info
+  IFS='|'
+  read -ra cust_info <<< $cust_exists
+  unset IFS
 fi
 
-echo -e "\nWhat time would you like your cut, $CUSTOMER_NAME?"
+echo -e "\nWhat time would you like your cut, ${cust_info[3]}?"
 while [ cont_loop=true ];
 do
 read SERVICE_TIME
