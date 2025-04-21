@@ -96,7 +96,7 @@ done
   # add new customer to salon database
  echo "$($PSQL "INSERT INTO customers (name, phone) VALUES ('$CUSTOMER_NAME', '$CUSTOMER_PHONE');")" | $do_not_show_new_customer_insert_statement
 #  echo -e "Welcome new customer!\n"
-  cust_name=$$CUSTOMER_NAME
+  cust_name=$CUSTOMER_NAME
 else
   IFS='|'
   read -ra cust_info <<< $cust_exists
