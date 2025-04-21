@@ -10,7 +10,8 @@ int_in_str='.*[0-9].*'
 valid_time1='^(1[0-2]|[1-9]):[0-5][0-9]$'
 valid_time2='^(1[0-2]|[1-9])(am|pm|AM|PM)$'
 do_not_show_new_customer_insert_statement=''
-
+cust_in_db=0
+cust_name=''
 declare -a cust_info
 
 # function that displays main menu
@@ -99,6 +100,8 @@ else
   IFS='|'
   read -ra cust_info <<< $cust_exists
   unset IFS
+  cust_in_db=1
+  cust_name=${cust_info[1]}
   # echo ${cust_info[@]}
 fi
 
@@ -118,13 +121,17 @@ done
 # echo -e "loop4 is done\n"
 
 # check if customer is already in salon database, if not, add them
-cust_exists="$($PSQL "SELECT * FROM customers WHERE phone = '$CUSTOMER_PHONE';")"
+# cust_exists="$($PSQL "SELECT * FROM customers WHERE phone = '$CUSTOMER_PHONE';")"
 
-if [[ -z $cust_exists ]];
+
+if [[ $cust_in_db == 0 ]];
 then
+  # echo $cust_in_db
   # add new customer to salon database
  echo "$($PSQL "INSERT INTO customers (name, phone) VALUES ('$CUSTOMER_NAME', '$CUSTOMER_PHONE');")" | $do_not_show_new_customer_insert_statement
-#  echo -e "Welcome new customer!\n"
+  # echo -e "Welcome new customer!\n"
+  cust_name=$CUSTOMER_NAME
+
 fi
 
 }
@@ -137,7 +144,7 @@ create_appointment () {
   echo "$($PSQL "INSERT INTO appointments (customer_id, service_id, time) VALUES ('$customer_id', '$SERVICE_ID_SELECTED', '$SERVICE_TIME');")" | $do_not_show_new_customer_insert_statement
 
   # appointment confirmation
-  echo -e "\nI have put you down for a $service_name at $SERVICE_TIME, $CUSTOMER_NAME."
+  echo -e "\nI have put you down for a $service_name at $SERVICE_TIME, $cust_name."
 }
 
 echo -e "\n~~~~ MY SALON ~~~~\n"
