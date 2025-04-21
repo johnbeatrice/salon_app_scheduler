@@ -24,6 +24,6 @@ echo "$($PSQL2 "ALTER TABLE appointments ADD FOREIGN KEY (customer_id) REFERENCE
 echo "$($PSQL2 "INSERT INTO customers (name, phone) VALUES('John Smith', '555-123-4567'), ('Jane Doe', '555-987-6543'), ('Robert Jones', '555-246-8012');")"
 
 # insert values into services
-echo "$($PSQL2 "INSERT INTO services (name) VALUES('Haircut'), ('Manicure'), ('Pedicure');")"
+echo "$($PSQL2 "INSERT INTO services (name) VALUES('cut'), ('color'), ('perm'), ('style'), ('trim');")"
 
 # appointments table will start as empty

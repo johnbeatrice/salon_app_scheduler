@@ -15,7 +15,7 @@ do_not_show_new_customer_insert_statement=''
 main_menu () {
   # echo -e "\nWelcome to My Salon, how can I help you?\n"
   echo "$($PSQL "SELECT * FROM services;")" | sed 's/|/) /'
-  echo -e "4) Exit"
+  # echo -e "4) Exit"
 }
 
 get_user_input () {
@@ -39,8 +39,12 @@ read SERVICE_ID_SELECTED
       break
   elif [[ $SERVICE_ID_SELECTED == 4 ]];
     then
-      echo -e "Good-bye"
-      exit
+      # echo -e "Good-bye"
+      # exit
+      break
+  elif [[ $SERVICE_ID_SELECTED == 5 ]];
+    then
+    break
   else 
     echo -e "\nI could not find that service. What would you like today?"
     main_menu
