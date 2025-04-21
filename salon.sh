@@ -31,22 +31,27 @@ read SERVICE_ID_SELECTED
   if [[ $SERVICE_ID_SELECTED == 1 ]];
     then
       # echo "You have selected Haircut"
+      cust_selection=cut
       break
   elif [[ $SERVICE_ID_SELECTED == 2 ]];
     then
       # echo "You have selected Manicure"
+      cust_selection=color
       break
   elif [[ $SERVICE_ID_SELECTED == 3 ]];
     then
       # echo "You have selected Pedicure"
+      cust_selection=perm
       break
   elif [[ $SERVICE_ID_SELECTED == 4 ]];
     then
       # echo -e "Good-bye"
       # exit
+      cust_selection=style
       break
   elif [[ $SERVICE_ID_SELECTED == 5 ]];
     then
+    cust_selection=trim
     break
   else 
     echo -e "\nI could not find that service. What would you like today?"
@@ -106,7 +111,7 @@ else
   # echo ${cust_info[@]}
 fi
 
-echo -e "\nWhat time would you like your cut, $cust_name?"
+echo -e "\nWhat time would you like your $cust_selection, $cust_name?"
 while [ cont_loop=true ];
 do
 read SERVICE_TIME
