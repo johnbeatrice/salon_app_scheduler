@@ -74,7 +74,7 @@ done
 # check if customer is already in salon database, if not, add them
 cust_exists="$($PSQL "SELECT * FROM customers WHERE phone = '$CUSTOMER_PHONE';")"
 
-echo $cust_exists
+# echo $cust_exists
 
 if [[ -z $cust_exists ]];
 then
@@ -99,7 +99,7 @@ else
   IFS='|'
   read -ra cust_info <<< $cust_exists
   unset IFS
-  echo ${cust_info[@]}
+  # echo ${cust_info[@]}
 fi
 
 echo -e "\nWhat time would you like your cut, ${cust_info[1]}?"
