@@ -11,6 +11,8 @@ valid_time1='^(1[0-2]|[1-9]):[0-5][0-9]$'
 valid_time2='^(1[0-2]|[1-9])(am|pm|AM|PM)$'
 do_not_show_new_customer_insert_statement=''
 
+declare -a cust_info
+
 # function that displays main menu
 main_menu () {
   # echo -e "\nWelcome to My Salon, how can I help you?\n"
@@ -72,6 +74,8 @@ done
 # check if customer is already in salon database, if not, add them
 cust_exists="$($PSQL "SELECT * FROM customers WHERE phone = '$CUSTOMER_PHONE';")"
 
+echo $cust_exists
+
 if [[ -z $cust_exists ]];
 then
 
@@ -92,13 +96,13 @@ done
  echo "$($PSQL "INSERT INTO customers (name, phone) VALUES ('$CUSTOMER_NAME', '$CUSTOMER_PHONE');")" | $do_not_show_new_customer_insert_statement
 #  echo -e "Welcome new customer!\n"
 else
-  declare -a cust_info
   IFS='|'
   read -ra cust_info <<< $cust_exists
   unset IFS
+  echo ${cust_info[@]}
 fi
 
-echo -e "\nWhat time would you like your cut, ${cust_info[3]}?"
+echo -e "\nWhat time would you like your cut, ${cust_info[1]}?"
 while [ cont_loop=true ];
 do
 read SERVICE_TIME
