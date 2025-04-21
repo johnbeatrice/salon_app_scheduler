@@ -154,7 +154,7 @@ create_appointment () {
 }
 
 echo -e "\n~~~~ MY SALON ~~~~\n"
-echo -e "\nWelcome to My Salon, how can I help you?\n"
+echo -e "Welcome to My Salon, how can I help you?\n"
 main_menu
 get_user_input
 create_appointment
