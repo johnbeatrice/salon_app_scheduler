@@ -10,7 +10,7 @@ int_in_str='.*[0-9].*'
 valid_time1='^(1[0-2]|[1-9]):[0-5][0-9]$'
 valid_time2='^(1[0-2]|[1-9])(am|pm|AM|PM)$'
 do_not_show_new_customer_insert_statement=''
-cust_in_db=0
+# cust_in_db=0
 cust_name=''
 declare -a cust_info
 
@@ -93,7 +93,7 @@ read CUSTOMER_NAME
     continue
   fi
 done
-  # add new customer to salon database
+  # add new customer to customers table
  echo "$($PSQL "INSERT INTO customers (name, phone) VALUES ('$CUSTOMER_NAME', '$CUSTOMER_PHONE');")" | $do_not_show_new_customer_insert_statement
 #  echo -e "Welcome new customer!\n"
   cust_name=$CUSTOMER_NAME
@@ -101,7 +101,7 @@ else
   IFS='|'
   read -ra cust_info <<< $cust_exists
   unset IFS
-  cust_in_db=1
+  # cust_in_db=1
   cust_name=${cust_info[1]}
   # echo ${cust_info[@]}
 fi
@@ -125,15 +125,15 @@ done
 # cust_exists="$($PSQL "SELECT * FROM customers WHERE phone = '$CUSTOMER_PHONE';")"
 
 
-if [[ $cust_in_db == 0 ]];
-then
-  # echo $cust_in_db
-  # add new customer to salon database
- echo "$($PSQL "INSERT INTO customers (name, phone) VALUES ('$CUSTOMER_NAME', '$CUSTOMER_PHONE');")" | $do_not_show_new_customer_insert_statement
-  # echo -e "Welcome new customer!\n"
-  # cust_name=$CUSTOMER_NAME
+# if [[ $cust_in_db == 0 ]];
+# then
+#   # echo $cust_in_db
+#   # add new customer to salon database
+#  echo "$($PSQL "INSERT INTO customers (name, phone) VALUES ('$CUSTOMER_NAME', '$CUSTOMER_PHONE');")" | $do_not_show_new_customer_insert_statement
+#   # echo -e "Welcome new customer!\n"
+#   # cust_name=$CUSTOMER_NAME
 
-fi
+# fi
 
 }
 
@@ -153,18 +153,3 @@ echo -e "\nWelcome to My Salon, how can I help you?\n"
 main_menu
 get_user_input
 create_appointment
-
-# main_menu function will display welcome message and appointment options
-
-# get_user_input function will contain the loops to get all user input
-# it will query the db to check whether the customer is new
-# if customer is new, add customer to customers table
-# then add info as new row to appointments table
-# then display the successful appointment booking message
-# then exit the script
-# (it will be called within main_menu after main_menu displays the services options)
-
-# exit function will be called within main_menu in the case that the user
-# enters the exit code instead of a valid service_id
-# it will display a goodbye/exit message and then terminate the script
-
