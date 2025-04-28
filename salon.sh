@@ -126,20 +126,6 @@ done
 
 # echo -e "loop4 is done\n"
 
-# check if customer is already in salon database, if not, add them
-# cust_exists="$($PSQL "SELECT * FROM customers WHERE phone = '$CUSTOMER_PHONE';")"
-
-
-# if [[ $cust_in_db == 0 ]];
-# then
-#   # echo $cust_in_db
-#   # add new customer to salon database
-#  echo "$($PSQL "INSERT INTO customers (name, phone) VALUES ('$CUSTOMER_NAME', '$CUSTOMER_PHONE');")" | $do_not_show_new_customer_insert_statement
-#   # echo -e "Welcome new customer!\n"
-#   # cust_name=$CUSTOMER_NAME
-
-# fi
-
 }
 
 create_appointment () {
